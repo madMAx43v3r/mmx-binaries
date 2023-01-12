@@ -1,0 +1,30 @@
+package vnx.addons;
+
+class HttpRequest {
+	
+	ulong id;									// unique id
+	
+	string url;									// original url (path + query params)
+	
+	string path;								// url without query params
+	
+	string method;								// GET / POST / PUT / ...
+	
+	string content_type;						// MIME type of payload (lower case)
+	
+	map<string, string> cookies;				// cookies (if any)
+	
+	map<string, string> query_params;			// query params (if any)
+	
+	vector<pair<string, string>> headers;		// http headers (keys are lower case)
+	
+	vnx.Buffer payload;
+	
+	vnx.Hash64 stream;							// stream address in case of a stream (zero otherwise)
+	
+	HttpSession* session;						// (optional)
+	
+	
+	string get_header_value(string key) const;		// throws exception if not found
+	
+}

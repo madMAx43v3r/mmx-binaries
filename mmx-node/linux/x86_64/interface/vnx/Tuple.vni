@@ -1,0 +1,14 @@
+package vnx;
+
+class Tuple {
+	
+	vector<Variant> fields;
+	
+	
+	Variant get_field_by_index(uint index) const;
+	
+	void set_field_by_index(uint index, Variant value);		// will expand array on-demand
+	
+	uint get_num_fields() const;
+	
+}

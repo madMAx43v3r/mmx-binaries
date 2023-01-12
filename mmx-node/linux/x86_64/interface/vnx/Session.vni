@@ -1,0 +1,20 @@
+package vnx;
+
+class Session {
+	
+	Hash64 id;						// unique session id (local to a process)
+	
+	string user;					// user name (empty = anonymous)
+	
+	set<string> permissions;		// granted permissions
+	
+	long login_time;				// posix timestamp [usec]
+	
+	
+	bool is_anonymous() const;
+	
+	bool has_permission(string perm) const;
+	
+	bool has_permission_vnx(permission_e perm) const;
+	
+}

@@ -1,0 +1,7 @@
+package vnx;
+
+class InternalError extends Exception {
+	
+	static InternalError* from_what(string what_);
+	
+}

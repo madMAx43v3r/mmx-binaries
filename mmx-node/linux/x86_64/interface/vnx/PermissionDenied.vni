@@ -1,0 +1,11 @@
+package vnx;
+
+class PermissionDenied extends Exception {
+	
+	Hash64 dst_mac;
+	
+	string method;
+	
+	string permission;			// required permission
+	
+}

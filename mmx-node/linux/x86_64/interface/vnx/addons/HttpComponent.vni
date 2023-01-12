@@ -1,0 +1,11 @@
+package vnx.addons;
+
+interface HttpComponent {
+	
+	@Permission(permission_e.HTTP_REQUEST)
+	HttpResponse* http_request(HttpRequest* request, string sub_path) const async;
+	
+	@Permission(permission_e.HTTP_REQUEST)
+	HttpData* http_request_chunk(HttpRequest* request, string sub_path, long offset, long max_bytes) const async;
+	
+}

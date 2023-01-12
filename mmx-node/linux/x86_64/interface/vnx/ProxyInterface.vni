@@ -1,0 +1,53 @@
+package vnx;
+
+interface ProxyInterface {
+
+	@Permission(LOCAL)
+	Session* login(string name, string password) const async;
+	
+	@Permission(PROXY_IMPORT)
+	void enable_import(string topic_name);
+	
+	@Permission(PROXY_IMPORT)
+	void disable_import(string topic_name);
+	
+	@Permission(PROXY_EXPORT)
+	void enable_export(string topic_name);
+	
+	@Permission(PROXY_EXPORT)
+	void disable_export(string topic_name);
+	
+	@Permission(PROXY_FORWARD)
+	void enable_forward(string service_name, int max_queue_ms, int max_queue_size);
+	
+	@Permission(PROXY_FORWARD)
+	void disable_forward(string service_name);
+	
+	@Permission(PROXY_FORWARD)
+	void enable_tunnel(Hash64 tunnel_addr, int max_queue_ms, int max_queue_size);
+	
+	@Permission(PROXY_FORWARD)
+	void disable_tunnel(Hash64 tunnel_addr);
+	
+	Session* get_session() const;
+	
+	Hash64 wait_on_connect() const async;		// returns remote process id when connected
+	
+	Hash64 wait_on_disconnect() const async;	// returns remote process id of lost connection (if any)
+	
+	@Permission(INTERNAL)
+	void on_connect();					// internal use only
+	
+	@Permission(INTERNAL)
+	void on_disconnect();				// internal use only
+	
+	@Permission(PROXY_INTERNAL)
+	void on_remote_connect(Hash64 process_id);			// internal use only, called from other end
+
+	@Permission(PROXY_INTERNAL)
+	void on_login(string name, string password);		// internal use only, called from other end
+	
+	@Permission(PROXY_INTERNAL)
+	void on_remote_login(Session* remote_session);		// internal use only, called from other end
+
+}

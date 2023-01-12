@@ -1,0 +1,16 @@
+package vnx;
+
+class TimeControl {
+	
+	long time;							// current sync time [usec]
+	long time_start;					// sync time when started [usec]
+	long time_offset;					// time offset between sync and virtual [usec]
+	
+	bool is_realtime = true;
+	bool is_paused = false;
+	
+	double time_speed = 1;
+	
+	long get_time_micros() const;
+	
+}

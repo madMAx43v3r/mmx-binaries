@@ -1,0 +1,16 @@
+package vnx;
+
+enum terminal_event_e{
+	KEY_ARROWUP,
+	KEY_ARROWDOWN,
+	KEY_ARROWLEFT,
+	KEY_ARROWRIGHT,
+	KEY_POS1,
+	KEY_END,
+	KEY_DEL,
+	KEY_CR,
+	KEY_LF,
+	KEY_BACKSPACE,
+	KEY_TAB,
+}
+

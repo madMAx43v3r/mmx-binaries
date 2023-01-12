@@ -1,0 +1,9 @@
+package vnx.addons;
+
+class CompressedValue {
+	
+	vnx.Value* decompress() const;
+	
+	vnx.Value* vnx_decompress() const;
+	
+}

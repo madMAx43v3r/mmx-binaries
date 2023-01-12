@@ -1,0 +1,43 @@
+package vnx.addons;
+
+class HttpResponse extends HttpData {
+	
+	bool is_chunked;				// if response payload should be sent via http_request_chunk() calls
+	
+	int status;						// HTTP status code
+	
+	string content_type;			// MIME type of payload
+	
+	vector<pair<string, string>> headers;		// HTTP headers
+	
+	vnx.Hash64 stream;				// stream address in case of a stream (zero otherwise)
+	
+	long total_size = -1;			// total size of the response if chunked or streamed, -1 if unknown [bytes]
+	
+	string error_text;				// optional error description
+	
+	
+	static HttpResponse* from_status(int status);
+
+	static HttpResponse* from_text(string content);
+	static HttpResponse* from_text_ex(string content, int status);
+	
+	static HttpResponse* from_string(string content, string mime_type);
+	static HttpResponse* from_string_ex(string content, string mime_type, int status);
+	
+	static HttpResponse* from_string_json(string content);
+	static HttpResponse* from_string_json_ex(string content, int status);
+	
+	static HttpResponse* from_variant_json(vnx.Variant value);
+	static HttpResponse* from_variant_json_ex(vnx.Variant value, int status);
+	
+	static HttpResponse* from_object_json(vnx.Object value);
+	static HttpResponse* from_object_json_ex(vnx.Object value, int status);
+	
+	static HttpResponse* from_value_json(vnx.Value* value);
+	static HttpResponse* from_value_json_ex(vnx.Value* value, int status);
+	
+	static HttpResponse* from_value_binary(vnx.Value* value);
+	static HttpResponse* from_value_binary_ex(vnx.Value* value, int status);
+	
+}

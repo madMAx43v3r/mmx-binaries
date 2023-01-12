@@ -1,0 +1,11 @@
+package vnx;
+
+module TimeServer {
+	
+	Hash64 remote_tunnel;			// tunnel address for remote process
+	
+	int interval_ms = 200;			// query interval
+	
+	int inv_gain = 100;				// inverse gain for offset estimation
+	
+}

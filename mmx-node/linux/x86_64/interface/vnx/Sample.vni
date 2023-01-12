@@ -1,0 +1,15 @@
+package vnx;
+
+class Sample extends Message {
+	
+	Hash64 src_mac;				// source identity (unique for each publisher)
+	
+	ulong seq_num;				// first sequence number is at least 1
+	
+	long recv_time;				// timestamp when it was received in process (sync time) [usec]
+	
+	TopicPtr topic;				// topic
+	
+	Value* value;				// the actual data
+	
+}

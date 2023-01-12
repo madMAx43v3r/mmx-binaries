@@ -1,0 +1,7 @@
+package vnx;
+
+
+class JRPC_Success extends JRPC_Response{
+	Variant result;
+}
+

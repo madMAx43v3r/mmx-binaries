@@ -1,0 +1,15 @@
+package vnx.addons;
+
+struct file_info_t {
+	
+	string name;				// directories have a trailing '/'
+	
+	string mime_type;			// mime type of the file
+	
+	long size;					// [bytes]
+	
+	long last_modified;			// posix timestamp [sec]
+	
+	bool is_directory;
+	
+}

@@ -1,0 +1,11 @@
+package vnx;
+
+struct record_topic_info_t {
+	
+	string name;
+	
+	long num_bytes;
+	long num_samples;
+	long num_samples_lost;
+	
+}

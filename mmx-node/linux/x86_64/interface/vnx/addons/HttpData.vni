@@ -1,0 +1,9 @@
+package vnx.addons;
+
+class HttpData {
+	
+	vnx.Buffer data;
+	
+	bool is_eof = true;			// if this is the last chunk
+	
+}

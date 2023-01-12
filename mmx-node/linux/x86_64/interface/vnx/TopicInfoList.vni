@@ -1,0 +1,11 @@
+package vnx;
+
+class TopicInfoList {
+	
+	long time;
+	
+	string process;
+	
+	vector<TopicInfo> list;
+	
+}

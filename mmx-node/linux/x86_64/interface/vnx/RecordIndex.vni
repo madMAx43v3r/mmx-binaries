@@ -1,0 +1,10 @@
+package vnx;
+
+class RecordIndex {
+	
+	long prev_block = -1;
+	long next_block = -1;
+	
+	vector<record_index_entry_t> index;
+	
+}

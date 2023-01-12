@@ -1,0 +1,8 @@
+package vnx;
+
+class User {
+	string name;
+	string hashed_password;
+	vector<string> access_roles;           // user access roles
+	set<string> permissions;               // user specific permissions
+}

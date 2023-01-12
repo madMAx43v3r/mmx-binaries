@@ -1,0 +1,74 @@
+
+<h4>Address | <span class="font-monospace"><%= address %></span></h4>
+
+<table class="table table-nonfluid">
+<thead>
+<tr>
+<th>Balance</th>
+<th>Token</th>
+<th>Contract</th>
+</tr>
+</thead>
+<tbody class="font-monospace">
+
+<% balances.forEach(function(entry) { %>
+<tr>
+<td><b><%= entry.value %></b></td>
+<td><%= entry.symbol %></td>
+<td>
+<% if(!entry.is_native) { %>
+<a href="/address?addr=<%= entry.contract %>"><%= entry.contract %></a>
+<% } %>
+</td>
+</tr>
+<% }); %>
+
+<% nfts.forEach(function(entry) { %>
+<tr>
+<td>N/A</td>
+<td>NFT</td>
+<td><a href="/address?addr=<%= entry.contract %>"><%= entry.contract %></a></td>
+</tr>
+<% }); %>
+</tbody>
+</table>
+
+<% if(contract) { %>
+<blockquote class="blockquote">
+<pre>
+<%= JSON.stringify(contract, null, 4) %>
+</pre>
+</blockquote>
+<% } %>
+
+<table class="table table-nonfluid">
+<thead>
+<tr>
+<th>Height</th>
+<th>Type</th>
+<th>Amount</th>
+<th>Token</th>
+<th>Address</th>
+<th></th>
+</tr>
+</thead>
+
+<tbody class="font-monospace">
+<% history.forEach(function(entry) { %>
+<tr>
+<td><%= entry.height %></td>
+<td><%= entry.type %></td>
+<td><b><%= entry.value %></b></td>
+<td>
+<% if(entry.symbol != "MMX") { %>
+<a href="/address?addr=<%= entry.contract %>"><%= entry.symbol %></a>
+<% } else { %>
+MMX
+<% } %>
+</td>
+<td><a href="address?addr=<%= entry.address %>"><%= entry.address %></a></td>
+<td><a href="transaction?id=<%= entry.txid %>">TX</a></td>
+</tr>
+<% }); %>
+</tbody>
+</table>

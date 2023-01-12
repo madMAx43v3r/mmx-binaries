@@ -1,0 +1,17 @@
+package vnx;
+
+class RecorderStatus {
+	
+	string file_name;
+	
+	bool is_recording;
+	
+	double bandwidth;			// how much data is written [MB/s]
+	
+	double sample_rate;			// how many samples are written [1/s]
+	
+	double loss_factor;			// percentage of how much samples were lost [1]
+	
+	RecordHeader header;
+	
+}
