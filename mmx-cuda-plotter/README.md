@@ -13,6 +13,8 @@ All GPUs for compute capability 6.1 (Pascal), 7.5 (Turing) and 8.6 (Ampere).
 
 Which includes: GTX 1000 series, GTX 1600 series, RTX 2000 series and RTX 3000 series
 
+Performance on Pascal GPUs (GTX 1000 series) is quite poor. When buying a new GPU, make sure to go for a Turing or newer.
+
 ## Usage
 
 ```
