@@ -7,11 +7,21 @@ In case of CPU only and more than 8 cores, you can increase `-r` to get more per
 The harvester and this tool will automatically use all availalable GPUs where it is supported.
 Lower C levels will use CPU only since GPU is not efficient for those.
 
-To disable GPU usage or to limit to a certain number of GPUs you can set a environment variable:
+To disable GPU usage or to limit to a certain number of GPUs you can set environment variable:
 ```
 export CHIAPOS_MAX_CUDA_DEVICES=0
 ```
 For example if you have a fast and a slow GPU, set `CHIAPOS_MAX_CUDA_DEVICES=1`, to only use the fast one.
+
+To reduce RAM usage or increase the max number of cores used you can tune environment variable:
+```
+export CHIAPOS_MAX_CORES=8
+```
+The default is 16 cores, which means RAM is allocated for 16 threads, irrespective of how many physical cores are present.
+
+To reduce RAM usage while keeping maximum performance `CHIAPOS_MAX_CORES` should be set to the number of physical cores / threads.
+
+The actual RAM and VRAM usage depends on the maximum compression level of your plots.
 
 ## Checking plots
 
