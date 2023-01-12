@@ -12,6 +12,10 @@ Supports Nvidia GPUs only at this point. Automatic fallback to CPU farming if no
 
 GPU plotter for compressed plots, MMX only. Supports Nvidia GPUs only at this point.
 
+## mmx-cpu-plotter
+
+CPU plotter for compressed plots. Otherwise identical to the original madMAx CPU plotter.
+
 ## mmx-chiapos
 
 Tool to check plots and perform benchmarks, for the new compressed plots. (regular plots supported as well)
