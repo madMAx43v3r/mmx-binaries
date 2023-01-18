@@ -5,11 +5,11 @@ Gigahorse is a madMAx GPU plotter for compressed k32 plots either fully in RAM w
 Other K sizes are supported as well, such as k29 - k34, in theory any K size (if compiled for it).
 RAM requirements scale with K size, so k33 needs 512G, k30 only needs 64G, etc.
 
-For k30+ at least 6 GB VRAM are required, use `-S 3` or `-S 2` to reduce VRAM usage (at the cost of performance).
+For k30+ at least 8 GB VRAM are required, use `-S 3` or `-S 2` to reduce VRAM usage (at the cost of performance).
 
 Supported GPUs are:
 
-All GPUs for compute capability 6.1 (Pascal), 7.5 (Turing) and 8.6 (Ampere).
+All GPUs for compute capability 6.1 (Pascal), 7.0 (Volta), 7.5 (Turing) and 8.0, 8.6, 8.9 (Ampere).
 
 Which includes: GTX 1000 series, GTX 1600 series, RTX 2000 series and RTX 3000 series
 
@@ -36,6 +36,7 @@ Usage:
   -Z, --unique         Make unique plot (default = false)
   -D, --directio       Use direct IO (default = false)
   -S, --streams arg    Number of parallel streams (default = 4, must be >= 2)
+  -M, --memory arg     Max shared / pinned memory in GiB (default = unlimited)
       --version        Print version
       --help           Print help
 ```
@@ -70,6 +71,14 @@ The plotter will automatically pause (and resume) plotting if `tmpdir` is runnin
 This free space check will fail when multiple instances are sharing the same drive though. In this case it's recommended to partition the drive and give each plotter their own space.
 
 In case of remote copy, the plotter will automatically pause and resume operation when the remote host goes down or the receiver (`chia_plot_sink`) is restarted.
+
+### Windows
+
+On Windows there is a limit on how much pinned memory can be allocated, usually it's half the available RAM.
+You can check the limit in TaskManger as "Shared GPU memory" when selecting the Performance tab on your GPU.
+
+Because of this, it's required to limit the max pinned memory via `-M`. For exmaple if your limit is 128 GB, you need to specify `-M 128`.
+Unfortunately this will slow down the plotter somewhat, consider using Linux for best performance.
 
 ## Remote copy
 
