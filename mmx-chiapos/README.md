@@ -37,6 +37,8 @@ time ./ProofOfSpace lookup -r 8 -f *.plot
 
 This will measure the total time of performing 1000 lookups.
 
+Note: The `real` time is what counts, not `user`.
+
 To convert the total time to maximum farm size:
 ```
 max_farm_size = plot_size * plot_filter * 8 * 1000 / total_lookup_time_seconds;
