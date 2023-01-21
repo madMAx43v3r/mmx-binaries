@@ -5,7 +5,7 @@ Gigahorse is a madMAx GPU plotter for compressed k32 plots either fully in RAM w
 Other K sizes are supported as well, such as k29 - k34, in theory any K size (if compiled for it).
 RAM requirements scale with K size, so k33 needs 512G, k30 only needs 64G, etc.
 
-For k30+ at least 8 GB VRAM are required, use `-S 3` or `-S 2` to reduce VRAM usage (at the cost of performance).
+For k30+ at least 8 GB VRAM are required, use `-S 3` or `-S 2` to reduce VRAM usage (at the cost of performance). The minimum VRAM needed is 4 GB.
 
 Supported GPUs are:
 
@@ -13,7 +13,7 @@ All GPUs for compute capability 6.1 (Pascal), 7.0 (Volta), 7.5 (Turing) and 8.0,
 
 Which includes: GTX 1000 series, GTX 1600 series, RTX 2000 series and RTX 3000 series
 
-Performance on Pascal GPUs (GTX 1000 series) is quite poor. When buying a new GPU, make sure to go for a Turing or newer.
+When buying a new GPU, it's recommended to go for a Turing or newer.
 
 ## Usage
 
