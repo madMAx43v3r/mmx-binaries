@@ -32,7 +32,9 @@ RAM_needed_GB = 2^(K_max + C_max - 38) * CHIAPOS_MAX_CORES
 
 ## Checking plots
 
+```
 ./ProofOfSpace check -r 8 -f *.plot
+```
 
 ## Farming benchmark
 
