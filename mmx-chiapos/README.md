@@ -16,12 +16,17 @@ For example if you have a fast and a slow GPU, set `CHIAPOS_MAX_CUDA_DEVICES=1`,
 To reduce RAM usage or increase the max number of cores used you can tune environment variable:
 ```
 export CHIAPOS_MAX_CORES=8
+or
+export CHIAPOS_MAX_CORES=64
 ```
-The default is 16 cores, which means RAM is allocated for 16 threads, irrespective of how many physical cores are present.
+The default is `16` cores, which means RAM is allocated for 16 threads, irrespective of how many physical cores are present.
 
-To reduce RAM usage while keeping maximum performance `CHIAPOS_MAX_CORES` should be set to the number of physical cores / threads.
+To reduce RAM usage while keeping maximum performance, `CHIAPOS_MAX_CORES` should be set to the number of physical cores / threads.
 
-The actual RAM and VRAM usage depends on the maximum compression level of your plots.
+The actual RAM usage depends on the maximum K size and compression level of your plots, and can be approximated as:
+```
+RAM_needed_GB = 2^(K + C - 38) * CHIAPOS_MAX_CORES
+```
 
 ## Checking plots
 
