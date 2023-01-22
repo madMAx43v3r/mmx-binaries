@@ -10,6 +10,8 @@ Lower C levels will use CPU only since GPU is not efficient for those.
 To disable GPU usage or to limit to a certain number of GPUs you can set environment variable:
 ```
 export CHIAPOS_MAX_CUDA_DEVICES=0
+or
+export CHIAPOS_MAX_CUDA_DEVICES=1
 ```
 For example if you have a fast and a slow GPU, set `CHIAPOS_MAX_CUDA_DEVICES=1`, to only use the fast one.
 
@@ -25,7 +27,7 @@ To reduce RAM usage while keeping maximum performance, `CHIAPOS_MAX_CORES` shoul
 
 The actual RAM usage depends on the maximum K size and compression level of your plots, and can be approximated as:
 ```
-RAM_needed_GB = 2^(K + C - 38) * CHIAPOS_MAX_CORES
+RAM_needed_GB = 2^(K_max + C_max - 38) * CHIAPOS_MAX_CORES
 ```
 
 ## Checking plots
