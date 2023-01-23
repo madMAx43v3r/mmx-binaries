@@ -55,6 +55,9 @@ public:
 	/// Wait for all threads to finish. Needs to be called before destructor. (thread-safe)
 	void wait();
 	
+	/// Wait for all tasks to finish.
+	void sync();
+
 	/// exit() + wait() (thread-safe)
 	void close();
 	
