@@ -9,9 +9,9 @@ For k30+ at least 8 GB VRAM are required, use `-S 3` or `-S 2` to reduce VRAM us
 
 Supported GPUs are:
 
-All GPUs for compute capability 6.1 (Pascal), 7.0 (Volta), 7.5 (Turing) and 8.0, 8.6, 8.9 (Ampere).
+All GPUs for compute capability 5.2 (Maxwell 2.0), 6.0, 6.1 (Pascal), 7.0 (Volta), 7.5 (Turing) and 8.0, 8.6, 8.9 (Ampere).
 
-Which includes: GTX 1000 series, GTX 1600 series, RTX 2000 series and RTX 3000 series
+Which includes: GTX 1000 series, GTX 1600 series, RTX 2000 series, RTX 3000 series and RTX 4000 series
 
 When buying a new GPU, it's recommended to go for a Turing or newer.
 
