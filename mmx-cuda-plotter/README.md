@@ -109,12 +109,30 @@ On PCIe 4.0 systems RAM bandwidth will be the bottleneck when paired with a bigg
 To make good use of an RTX 3090 you'll need PCIe 4.0 together with 256G of quad-channel DDR4-3200 memory (or better).
 
 ### Multi-Socket Systems
+
+Systems with more than one socket and/or featuring processors that leverage multi-chip module (MCM) designs (e.g. Threadripper and EPYC) or Cluster-on-Die (CoD) technology (e.g. high-core-count Broadwell-EP) can be usually configured with either Uniform Memory Access (UMA) topology—all the memory on the system is presented as one addressable space—or Non-Uniform Memory Access (NUMA) topology—the memory on the system is presented as two or more addressable spaces called nodes. Each NUMA node may additionally contain processor cores, shared caches, and I/O (PCIe lanes).
+
+The quickest and easiest way to determine how your system is configured, how many NUMA nodes are present, and which processors, caches, and I/O are assigned to each node is to install `hwloc` (or `hwloc-nox` on non-GUI systems) and run `lstopo`. Here's an example of a two-socket (2P) system configured for NUMA topology with some PCIe devices and half the system memory present in each node:
+
+<img src="https://user-images.githubusercontent.com/8540936/214699108-b23110b0-ab37-40d7-804b-17efc93e3981.png" width="400" />
+
+UMA topology is easier for users and applications to work with because the system looks and feels like one big computer, but performance suffers whenever data must be transferred between processors—imagine a PCIe device attached to one socket reading from and writing to a region of memory attached to a different socket—and there are limited tools available to mitigate this. NUMA topology is harder to work with because you have to know where everything is and specifically tune your workloads to keep them local, but latency and bandwidth can be greatly improved when it is done correctly using the available tools.
+
+If your system is configurable for either UMA or NUMA topology, you can typically do so from within your system BIOS. Some systems have options specifically to enable or disable NUMA; some systems require you to enable memory channel interleave for UMA or disable memory channel interleave for NUMA. And some systems give you some flexibility to choose how many NUMA nodes you want. For example, many EPYC systems let you disable NUMA altogether or choose the number of NUMA nodes per socket.
+
 It's recommended to run one GPU per CPU in case of multi-socket machines, while making sure to match each GPU with the correct CPU that's directly connected, and restricting memory allocations to local RAM.
 
 Example:
 ```
 numactl -N 0 -m 0 ./cuda_plot_k32 -g 0 ...
 numactl -N 1 -m 1 ./cuda_plot_k32 -g 1 ...
+```
+
+If you have a multi-socket machine and only one GPU, but you want the plotter to be able to access all the memory on the system, you can configure it to preferentially allocate memory from the local node (ideally the node containing the GPU, storage devices, etc.) before allocating memory from other nodes:
+
+Example:
+```
+numactl -N 0 --preferred=0 ./cuda_plot_k32 ...
 ```
 
 ### Example HP Z420 + RTX 3060 Ti
