@@ -20,9 +20,15 @@ cd mmx-binaries/mmx-node/linux/x86_64
 ./run_node.sh
 ```
 
-Ajust `~/mmx-node/config/local` to your previous mmx-node installation, and if not available, ignore this line.
+Adjust `~/mmx-node/config/local` to your previous mmx-node installation, and if not available, ignore this line.
 
 You also need to copy over your wallet that is needed for farming your plots.
 
 Note: Make sure to open a new terminal to execute the above commands.
+
+You may also copy over your previous DB and blockchain data, to avoid having to sync again:
+```
+cp -r ~/mmx-node/testnetX mmx-binaries/mmx-node/linux/x86_64/
+```
+Adjust `testnetX` to the current testnet, like `testnet9`.
 
