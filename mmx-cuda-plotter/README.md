@@ -41,24 +41,37 @@ Usage:
       --help           Print help
 ```
 
+Important: `-t` only stores the final plot file, to cache it for final copy. \
+Important: `-2` should be an SSD for partial RAM mode, not a RAM disk. \
+Important: `-M` is need on Windows to limit max GPU shared memory, see below.
+
 Note: The first plot will be slow due to memory allocation. Hence `-n -1` is the recommended way of plotting with Gigahorse.
+
+### Full RAM mode (no `-2`)
+
+The GPU plotter uses RAM internally, there is no need for a RAM disk.
+All that's needed is a `-t` drive to cache the plots for final copy.
 
 Example with full RAM mode and remote copy:
 ```
 cuda_plot_kxx -n -1 -C 7 -t /mnt/ssd/ -d @REMOTE_HOST -c <pool_contract> -f <farmer_key>
 ```
-
 `REMOTE_HOST` can be a host name or IP address, the `@` prefix is needed to signal remote copy mode.
-
-Example with partial RAM mode and remote copy:
-```
-cuda_plot_kxx -n -1 -C 7 -t /mnt/ssd/ -2 /mnt/fast_ssd/ -d @REMOTE_HOST -c <pool_contract> -f <farmer_key>
-```
 
 Example with full RAM mode and local destination:
 ```
 cuda_plot_kxx -n -1 -C 7 -t /mnt/ssd/ -d /mnt/fast_hdd/ -c <pool_contract> -f <farmer_key>
 ```
+
+### Partial RAM mode (SSD for `-2`)
+
+To enable partial RAM mode, specify an SSD drive for `-2`.
+
+Example with partial RAM mode and remote copy:
+```
+cuda_plot_kxx -n -1 -C 7 -t /mnt/ssd/ -2 /mnt/fast_ssd/ -d @REMOTE_HOST -c <pool_contract> -f <farmer_key>
+```
+`REMOTE_HOST` can be a host name or IP address, the `@` prefix is needed to signal remote copy mode.
 
 Example with partial RAM mode and local destination:
 ```
