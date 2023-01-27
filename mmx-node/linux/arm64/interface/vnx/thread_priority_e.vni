@@ -1,0 +1,9 @@
+package vnx;
+
+enum thread_priority_e {
+	VERY_LOW,
+	LOW,
+	NORMAL,
+	HIGH,
+	VERY_HIGH,
+}

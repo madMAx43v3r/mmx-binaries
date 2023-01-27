@@ -1,0 +1,14 @@
+package vnx;
+
+class FlowMessage extends Message {
+	
+	static const ushort OPEN = 1;
+	static const ushort PING = 2;
+	static const ushort CLOSE = 3;
+	
+	Hash64 src_mac;
+	Hash64 dst_mac;
+	
+	ushort flow_code;
+	
+}

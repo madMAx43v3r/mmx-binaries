@@ -1,0 +1,15 @@
+package vnx;
+
+topic shutdown;
+topic log_out;
+topic topic_info;
+topic module_info;
+topic time_control;
+topic time_sync;
+
+extern Hash64 = {4};				// {UINT64}
+extern TopicPtr = {12, 5};			// {LIST, INT8}
+extern Variant = {17};				// {DYNAMIC}
+extern Object = {24};				// {OBJECT}
+extern Buffer = {12, 1};			// {LIST, UINT8}
+extern TypeCode = {14};				// {CODE_TYPE_CODE}

@@ -1,0 +1,35 @@
+package vnx;
+
+module BaseProxy implements ProxyInterface {
+
+	string address;						// URL to connect to
+	pair<string, string> auto_login;	// login credentials to use automatically after connect
+	
+	vector<TopicPtr> import_list;		// list of topics to import (ie. subscribe)
+	vector<TopicPtr> export_list;		// list of topics to export
+	vector<string> forward_list;		// list of services to import (ie. forward requests)
+	vector<Hash64> tunnel_list;			// list of tunnels to open (ie. forward messages)
+	
+	map<TopicPtr, TopicPtr> import_map;		// remap a topic or domain (remote name -> local name)
+	map<TopicPtr, TopicPtr> export_map;		// remap a topic or domain (local name -> remote name)
+	
+	Hash64 receive_tunnel;				// optional pipe to send all samples to
+	Hash64 request_tunnel;				// optional pipe to send all requests to
+	
+	bool auto_import = false;			// import all topics that are currently subscribed
+	bool time_sync = false;				// if to sync time with remote process
+	bool allow_login = true;			// if to allow logins to gain more access (for use_authentication == true)
+	bool use_authentication = false;	// if to require authentication from client
+	bool block_until_connect = true;	// block request pipes until first successful connect
+	bool block_until_reconnect = false;	// block request pipes until next successful re-connect
+	
+	int max_queue_ms = 100;				// [ms]
+	int max_queue_size = 1000;			// number of messages [1]
+	int max_hop_count = 10;				// to limit network cycles [1]
+	
+	int recv_buffer_size = 0;			// TCP buffer size (0 = default) [bytes]
+	int send_buffer_size = 131072;		// TCP buffer size (0 = default) [bytes]
+	
+	string default_access = "DEFAULT";	// default access role for anonymous clients (if use_authentication == true)
+
+}

@@ -1,0 +1,8 @@
+package vnx;
+
+interface GatewayInterface {
+	
+	@Permission(CONST_REQUEST)
+	void forward(Request* request);
+	
+}

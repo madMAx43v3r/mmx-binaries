@@ -1,0 +1,8 @@
+package vnx;
+
+module Gateway implements GatewayInterface {
+	
+	int max_queue_ms = 100;			// [ms]
+	int max_queue_size = 0;			// 0 = infinite
+	
+}

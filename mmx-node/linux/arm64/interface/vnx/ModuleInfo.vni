@@ -1,0 +1,35 @@
+package vnx;
+
+class ModuleInfo {
+	
+	long time;				// time stamp (virtual time) [usec]
+	
+	Hash64 id;				// unique module id
+	Hash64 src_mac;			// source mac for publishing
+	
+	string name;			// module name
+	string type;			// type name
+	
+	long time_started;				// POSIX timestamp [usec]
+	
+	long time_idle;					// current stats (see vnx_heartbeat_interval_ms) [usec]
+	long time_running;				// current stats (see vnx_heartbeat_interval_ms) [usec]
+	
+	long time_idle_total;			// since start of module [usec]
+	long time_running_total;		// since start of module [usec]
+	
+	long num_async_pending;			// number of pending async requests (waiting for returns)
+	long num_async_process;			// number of async requests being processed right now
+	
+	vector<string> sub_topics;		// topic subscriptions
+	vector<string> pub_topics;		// topic publishers
+	
+	map<Hash64, Endpoint*> remotes;		// map of connected processes (process id => endpoint)
+	
+	TypeCode type_code;				// module type code
+	
+	
+	double get_cpu_load() const;				// 0 to 1
+	double get_cpu_load_total() const;			// 0 to 1 (total average)
+	
+}

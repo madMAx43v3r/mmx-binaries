@@ -1,0 +1,10 @@
+package vnx;
+
+class Generic {
+	
+	Variant data;
+	
+	
+	static Generic* from_data(Variant data);
+	
+}

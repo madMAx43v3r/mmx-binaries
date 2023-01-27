@@ -1,0 +1,55 @@
+
+<h4>Block | <span class="font-monospace"><%= block.height %></span></h4>
+
+<table class="table table-nonfluid mb-5">
+<tbody class="font-monospace">
+<tr>
+<td><b>Hash</b></td>
+<td><%= block.hash %></td>
+</tr>
+<tr>
+<td><b>Previous</b></td>
+<td><a href="block?hash=<%= block.prev %>"><%= block.prev %></a></td>
+</tr>
+<tr>
+<td><b>Height</b></td>
+<td><%= block.height %></td>
+</tr>
+<tr>
+<td><b>Next</b></td>
+<td><a href="block?height=<%= block.height+1 %>"><%= block.height+1 %></a></td>
+</tr>
+<tr>
+<td><b>K Size</b></td>
+<td><%= block.ksize %></td>
+</tr>
+<tr>
+<td><b>Proof Score</b></td>
+<td><%= block.score %></td>
+</tr>
+
+<% block.rewards.forEach(function(entry, index) { %>
+<tr>
+<td><b>Reward[<%= index %>]</b></td>
+<td><%= entry.value %> | <a href="address?addr=<%= entry.address %>"><%= entry.address %></a></td>
+</tr>
+<% }); %>
+
+<tr>
+<td><b>Farmer Key</b></td>
+<td><%= block.farmer_key %></td>
+</tr>
+</tbody>
+</table>
+
+<table class="table table-nonfluid">
+<tbody class="font-monospace">
+<% block.tx_list.forEach(function(tx, index) { %>
+<tr>
+<td><b>TX[<%= index %>]</b></td>
+<td><a href="transaction?id=<%= tx.id %>"><%= tx.id %></a></td>
+</tr>
+<% }); %>
+</tbody>
+</table>
+

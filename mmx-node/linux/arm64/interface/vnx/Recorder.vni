@@ -1,0 +1,21 @@
+package vnx;
+
+module Recorder {
+	
+	TopicPtr output_status = "vnx.recorder_status";
+	
+	string filename;			// use % as a placeholder for datetime
+	
+	int max_queue_ms = 1000;
+	int flush_interval_ms = 1000;
+	
+	int header_size = 262144;
+	int block_size = 4096;
+	
+	vector<string> topics;		// list of topics to record
+	
+	string proxy_name;			// proxy for the target process, if any
+	
+	Hash64 receive_tunnel;		// optional pipe to send all samples to
+	
+}

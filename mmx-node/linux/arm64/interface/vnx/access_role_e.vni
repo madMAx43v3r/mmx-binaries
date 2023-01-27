@@ -1,0 +1,13 @@
+package vnx;
+
+
+enum access_role_e{
+	UNAUTHENTICATED,
+	DEFAULT,
+	VIEWER,
+	OBSERVER,
+	USER,
+	INSTALLER,
+	ADMIN,
+}
+
