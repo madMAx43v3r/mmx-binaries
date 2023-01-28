@@ -54,13 +54,13 @@ All that's needed is a `-t` drive to cache the plots for final copy.
 
 Example with full RAM mode and remote copy:
 ```
-cuda_plot_kxx -n -1 -C 7 -t /mnt/ssd/ -d @REMOTE_HOST -c <pool_contract> -f <farmer_key>
+cuda_plot_kxx -x 11337 -n -1 -C 7 -t /mnt/ssd/ -d @REMOTE_HOST -p <pool_key> -f <farmer_key>
 ```
 `REMOTE_HOST` can be a host name or IP address, the `@` prefix is needed to signal remote copy mode.
 
 Example with full RAM mode and local destination:
 ```
-cuda_plot_kxx -n -1 -C 7 -t /mnt/ssd/ -d /mnt/fast_hdd/ -c <pool_contract> -f <farmer_key>
+cuda_plot_kxx -x 11337 -n -1 -C 7 -t /mnt/ssd/ -d /mnt/fast_hdd/ -p <pool_key> -f <farmer_key>
 ```
 
 ### Partial RAM mode (SSD for `-2`)
@@ -69,13 +69,13 @@ To enable partial RAM mode, specify an SSD drive for `-2`.
 
 Example with partial RAM mode and remote copy:
 ```
-cuda_plot_kxx -n -1 -C 7 -t /mnt/ssd/ -2 /mnt/fast_ssd/ -d @REMOTE_HOST -c <pool_contract> -f <farmer_key>
+cuda_plot_kxx -x 11337 -n -1 -C 7 -t /mnt/ssd/ -2 /mnt/fast_ssd/ -d @REMOTE_HOST -p <pool_key> -f <farmer_key>
 ```
 `REMOTE_HOST` can be a host name or IP address, the `@` prefix is needed to signal remote copy mode.
 
 Example with partial RAM mode and local destination:
 ```
-cuda_plot_kxx -n -1 -C 7 -t /mnt/slow_ssd/ -2 /mnt/fast_ssd/ -d /mnt/fast_hdd/ -c <pool_contract> -f <farmer_key>
+cuda_plot_kxx -x 11337 -n -1 -C 7 -t /mnt/slow_ssd/ -2 /mnt/fast_ssd/ -d /mnt/fast_hdd/ -p <pool_key> -f <farmer_key>
 ```
 
 `tmpdir2` requires around 150G - 180G of free space for k32, depending on compression level.
