@@ -21,24 +21,22 @@ When buying a new GPU, it's recommended to go for a Turing or newer.
 Usage:
   cuda_plot [OPTION...]
 
-  -C, --level arg      Compression level (default = 1, min = 1, max = 10)
-  -x, --port arg       Network port (default = 8444, chives = 9699)
+  -C, --level arg      Compression level (default = 1, min = 1, max = 9)
+  -x, --port arg       Network port (default = 8444, chives = 9699, MMX = 11337)
   -n, --count arg      Number of plots to create (default = 1, -1 = infinite)
   -g, --device arg     CUDA device (default = 0)
+  -r, --ndevices arg   Number of CUDA devices (default = 1)
   -t, --tmpdir arg     Temporary directory for plot storage (default = $PWD)
   -2, --tmpdir2 arg    Temporary directory 2 for hybrid mode (default = @RAM)
-  -d, --finaldir arg   Final directory (default = <tmpdir>, remote = @HOST)
+  -d, --finaldir arg   Final destinations (default = <tmpdir>, remote = @HOST)
   -z, --dstport arg    Destination port for remote copy (default = 1337)
   -w, --waitforcopy    Wait for copy to start next plot
   -p, --poolkey arg    Pool Public Key (48 bytes)
   -c, --contract arg   Pool Contract Address (62 chars)
   -f, --farmerkey arg  Farmer Public Key (48 bytes)
   -Z, --unique         Make unique plot (default = false)
-  -D, --directio       Use direct IO (default = false)
   -S, --streams arg    Number of parallel streams (default = 4, must be >= 2)
-  -M, --memory arg     Max shared / pinned memory in GiB (default = unlimited)
-      --version        Print version
-      --help           Print help
+  -M, --memory arg     Max shared / pinned memory in GiB (default =
 ```
 
 Important: `-t` only stores the final plot file, to cache it for final copy. \
@@ -60,7 +58,7 @@ cuda_plot_kxx -x 11337 -n -1 -C 7 -t /mnt/ssd/ -d @REMOTE_HOST -p <pool_key> -f 
 
 Example with full RAM mode and local destination:
 ```
-cuda_plot_kxx -x 11337 -n -1 -C 7 -t /mnt/ssd/ -d /mnt/fast_hdd/ -p <pool_key> -f <farmer_key>
+cuda_plot_kxx -x 11337 -n -1 -C 7 -t /mnt/ssd/ -d /mnt/hdd1/ -d /mnt/hdd2/ -p <pool_key> -f <farmer_key>
 ```
 
 ### Partial RAM mode (SSD for `-2`)
@@ -75,7 +73,7 @@ cuda_plot_kxx -x 11337 -n -1 -C 7 -t /mnt/ssd/ -2 /mnt/fast_ssd/ -d @REMOTE_HOST
 
 Example with partial RAM mode and local destination:
 ```
-cuda_plot_kxx -x 11337 -n -1 -C 7 -t /mnt/slow_ssd/ -2 /mnt/fast_ssd/ -d /mnt/fast_hdd/ -p <pool_key> -f <farmer_key>
+cuda_plot_kxx -x 11337 -n -1 -C 7 -t /mnt/slow_ssd/ -2 /mnt/fast_ssd/ -d /mnt/hdd1/ -d /mnt/hdd2/ -p <pool_key> -f <farmer_key>
 ```
 
 `tmpdir2` requires around 150G - 180G of free space for k32, depending on compression level.
