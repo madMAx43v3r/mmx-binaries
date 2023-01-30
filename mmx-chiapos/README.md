@@ -54,7 +54,7 @@ Note: The `real` time is what counts, not `user`. (For windows use Total Seconds
 
 To convert the total time to maximum farm size:
 ```
-max_farm_size = plot_size * plot_filter * 8 * 1000 / total_lookup_time_seconds;
+max_farm_size_TiB = (plot_size_GiB / 1024) * plot_filter * 8 * 1000 / total_lookup_time_seconds;
 ```
 The plot filter on MMX testnet10 and mainnet will be `256`, while Chia and testnet9 are using `512`.
 
