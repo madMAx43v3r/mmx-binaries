@@ -48,7 +48,7 @@ To check how many plots of a certain K size and C level you can farm on a machin
 Measure-Command {./ProofOfSpace lookup -r 8 -f *.plot|Out-Default}
 ```
 
-This will measure the total time of performing 1000 lookups. This should be performed with the plot on an SSD, to simulate the harvester making lookups from multiple HDD at once, running this on HDD will not be representative of actual farming conditions. Chiapos caches the results from completed plots and will complete a second run on a previously run plot significantly faster, so if you intend to run the benchmark on the same plot multiple times: rename the plot file to ignore the cached proofs.
+This will measure the total time of performing 1000 lookups. **This should be performed with the plot on an SSD** to simulate the harvester making lookups from multiple HDD at once, running this on HDD will not be representative of actual farming conditions. Chiapos caches the results from completed plots and will complete a second run on a previously run plot significantly faster, so if you intend to run the benchmark on the same plot multiple times: rename the plot file to ignore the cached proofs.
 
 Note: The `real` time is what counts, not `user`. (For windows use Total Seconds)
 
