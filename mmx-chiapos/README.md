@@ -38,21 +38,22 @@ RAM_needed_GB = 2^(K_max + C_max - 38) * CHIAPOS_MAX_CORES
 
 ## Farming benchmark
 
-To check how many plots of a certain K size and C level you can farm on a machine on linux:
-
+To check how many plots of a certain K size and C level you can farm on a machine on Linux:
 ```
 time ./ProofOfSpace lookup -r 8 -f *.plot
 ```
-To check how many plots of a certain K size and C level you can farm on a machine on windows:
+
+To check how many plots of a certain K size and C level you can farm on a machine on Windows:
 ```
 Measure-Command {./ProofOfSpace lookup -r 8 -f *.plot|Out-Default}
 ```
-
 This will measure the total time of performing 1000 lookups.
 
-Note: The `real` time is what counts, not `user`. (For windows use Total Seconds)
+Note: **This should be performed with the plot on an SSD**, otherwise the benchmark will be IO bound and not accurate.
 
-To convert the total time to maximum farm size:
+Note: The `real` time is what counts, not `user`. (For Windows use `Total Seconds`)
+
+To convert the total time in seconds to maximum farm size in TiB:
 ```
 max_farm_size_TiB = (plot_size_GiB / 1024) * plot_filter * 8 * 1000 / total_lookup_time_seconds;
 ```
