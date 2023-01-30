@@ -48,14 +48,15 @@ To check how many plots of a certain K size and C level you can farm on a machin
 Measure-Command {./ProofOfSpace lookup -r 8 -f *.plot|Out-Default}
 ```
 
-This will measure the total time of performing 1000 lookups.
+This will measure the total time of performing 1000 lookups. This should be performed with the plot on an SSD, to simulate the harvester making lookups from multiple HDD at once, running this on HDD will not be representative of actual farming conditions. Chiapos caches the results from completed plots and will complete a second run on a previously run plot significantly faster, so if you intend to run the benchmark on the same plot multiple times: rename the plot file to ignore the cached proofs.
 
 Note: The `real` time is what counts, not `user`. (For windows use Total Seconds)
 
 To convert the total time to maximum farm size:
 ```
-max_farm_size = plot_size * plot_filter * 8 * 1000 / total_lookup_time_seconds;
+max_farm_size = plot_size(GiB/TiB) * plot_filter * 8 * 1000 / total_lookup_time_seconds;
 ```
+The result from this equation will give you farm size in GiB or TiB, depending on which you used for plot size.
 The plot filter on MMX testnet10 and mainnet will be `256`, while Chia and testnet9 are using `512`.
 
 In case of CPU farming, set `-r` to the number of CPU cores / threads.
