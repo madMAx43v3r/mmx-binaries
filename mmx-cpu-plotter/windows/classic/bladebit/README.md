@@ -1,6 +1,4 @@
-# BladeBit Chia Plotter
-
-[![Release Builds](https://github.com/Chia-Network/bladebit/actions/workflows/build-release.yml/badge.svg?branch=master&event=push)](https://github.com/Chia-Network/bladebit/actions/workflows/build-release.yml)
+# BladeBit Chia Plotter with MMX plot support
 
 A high-performance **k32-only**, Chia (XCH) plotter supporting in-RAM and disk-based plotting.
 
