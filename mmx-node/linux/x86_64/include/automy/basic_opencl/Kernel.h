@@ -24,17 +24,29 @@ namespace basic_opencl {
 
 class Kernel {
 public:
-	Kernel(cl_kernel kernel_);
+	Kernel(cl_kernel kernel_, bool with_arg_map);
 	
 	~Kernel();
 	
 	Kernel(const Kernel&) = delete;
 	Kernel& operator=(const Kernel&) = delete;
 	
-	static std::shared_ptr<Kernel> create(cl_kernel kernel);
+	static std::shared_ptr<Kernel> create(cl_kernel kernel, bool with_arg_map);
 	
+	void set(const cl_uint arg, const cl_int& value) { set_arg(arg, value); }
+	void set(const cl_uint arg, const cl_long& value) { set_arg(arg, value); }
+	void set(const cl_uint arg, const cl_uint& value) { set_arg(arg, value); }
+	void set(const cl_uint arg, const cl_ulong& value) { set_arg(arg, value); }
+	void set(const cl_uint arg, const cl_float& value) { set_arg(arg, value); }
+	void set(const cl_uint arg, const Buffer& value) { set_arg(arg, value.data()); }
+	void set(const cl_uint arg, const Image& value) { set_arg(arg, value.data()); }
+	void set(const cl_uint arg, std::shared_ptr<const Buffer> value) { set_arg(arg, value->data()); }
+	void set(const cl_uint arg, std::shared_ptr<const Image> value) { set_arg(arg, value->data()); }
+
 	void set(const std::string& arg, const cl_int& value) { set_arg(arg, value); }
+	void set(const std::string& arg, const cl_long& value) { set_arg(arg, value); }
 	void set(const std::string& arg, const cl_uint& value) { set_arg(arg, value); }
+	void set(const std::string& arg, const cl_ulong& value) { set_arg(arg, value); }
 	void set(const std::string& arg, const cl_float& value) { set_arg(arg, value); }
 	void set(const std::string& arg, const Buffer& value) { set_arg(arg, value.data()); }
 	void set(const std::string& arg, const Image& value) { set_arg(arg, value.data()); }
@@ -59,6 +71,13 @@ public:
 	
 protected:
 	template<typename T>
+	void set_arg(const cl_uint arg, const T& value) {
+		if(clSetKernelArg(kernel, arg, sizeof(T), &value)) {
+			throw std::runtime_error("clSetKernelArg() failed for " + name + " : " + std::to_string(arg));
+		}
+	}
+
+	template<typename T>
 	void set_arg(const std::string& arg, const T& value) {
 		auto it = arg_map.find(arg);
 		if(it != arg_map.end()) {
@@ -71,11 +90,11 @@ protected:
 	}
 	
 private:
-	cl_kernel kernel = 0;
+	cl_kernel kernel = nullptr;
 	
 	std::string name;
 	std::vector<std::string> arg_list;
-	std::map<std::string, int> arg_map;
+	std::map<std::string, cl_uint> arg_map;
 	
 };
 

@@ -8,6 +8,8 @@
 #ifndef INCLUDE_AUTOMY_BASIC_OPENCL_COMMANDQUEUE_H_
 #define INCLUDE_AUTOMY_BASIC_OPENCL_COMMANDQUEUE_H_
 
+#define CL_TARGET_OPENCL_VERSION 120
+
 #include <CL/cl.h>
 
 #include <stdexcept>

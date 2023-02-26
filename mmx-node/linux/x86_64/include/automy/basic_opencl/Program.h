@@ -11,6 +11,7 @@
 #include <automy/basic_opencl/Context.h>
 #include <automy/basic_opencl/Kernel.h>
 
+#include <set>
 #include <vector>
 #include <string>
 
@@ -18,35 +19,30 @@
 namespace automy {
 namespace basic_opencl {
 
-class Program;
-
-void add_include_path(const std::string& path);
-
-std::shared_ptr<const Program> get_program(const std::string& name);
-
-void register_program(const std::string& name, std::shared_ptr<const Program> program);
-
-
 class Program {
 public:
 	std::string options;
 	
 	std::vector<std::string> build_log;
 	
-	Program();
+	Program(cl_context context, cl_platform_id platform);
 	
 	Program(const Program&) = delete;
 	Program& operator=(const Program&) = delete;
 	
 	~Program();
 	
-	static std::shared_ptr<Program> create();
+	static std::shared_ptr<Program> create(cl_context context, cl_platform_id platform);
 	
 	void add_source(const std::string& file_name);
 	
+	void add_source_code(const std::string& source);
+
+	void add_include_path(const std::string& path);
+
 	void create_from_source();
 	
-	bool build();
+	bool build(cl_device_type device_type, bool with_arg_names = true);
 	
 	void print_sources(std::ostream& out) const;
 	
@@ -55,8 +51,12 @@ public:
 	std::shared_ptr<Kernel> create_kernel(const std::string& name) const;
 	
 private:
-	cl_program program = 0;
+	cl_context context;
+	cl_platform_id platform;
+	cl_program program = nullptr;
+	bool have_arg_info = false;
 	
+	std::set<std::string> includes;
 	std::vector<std::string> sources;
 
 };
