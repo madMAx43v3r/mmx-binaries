@@ -27,8 +27,8 @@ class Buffer3D : public Buffer {
 public:
 	Buffer3D() {}
 	
-	Buffer3D(size_t width, size_t height, size_t depth = 1) {
-		resize(width, height, depth);
+	Buffer3D(cl_context context, size_t width, size_t height, size_t depth = 1) {
+		resize(context, width, height, depth);
 	}
 	
 	static std::shared_ptr<Buffer3D<T>> create() {
@@ -39,7 +39,7 @@ public:
 		return std::make_shared<Buffer3D<T>>(width, height, depth);
 	}
 	
-	void resize(size_t width, size_t height, size_t depth = 1) {
+	void resize(cl_context context, size_t width, size_t height, size_t depth = 1) {
 		const size_t new_size = width * height * depth;
 		if(new_size != size()) {
 			if(data_) {
@@ -50,7 +50,7 @@ public:
 			}
 			if(new_size) {
 				cl_int err = 0;
-				data_ = clCreateBuffer(g_context, 0, width * height * depth * sizeof(T), nullptr, &err);
+				data_ = clCreateBuffer(context, 0, width * height * depth * sizeof(T), nullptr, &err);
 				if(err) {
 					throw std::runtime_error("clCreateBuffer() failed with " + get_error_string(err));
 				}
@@ -86,7 +86,6 @@ public:
 	}
 	
 	void upload(std::shared_ptr<CommandQueue> queue, const std::vector<T>& vec, bool copy = true) {
-		resize(vec.size(), 1);
 		upload(queue, vec.data(), copy);
 	}
 	
@@ -100,7 +99,6 @@ public:
 
 #ifdef WITH_AUTOMY_BASIC
 	void upload(std::shared_ptr<CommandQueue> queue, const basic::Image<T>& img, bool copy = true) {
-		resize(img.width(), img.height(), img.depth());
 		upload(queue, img.get_data(), copy);
 	}
 
@@ -112,7 +110,6 @@ public:
 
 #ifdef WITH_AUTOMY_MATH
 	void upload(std::shared_ptr<CommandQueue> queue, const math::MatrixX<T>& mat, bool copy = true) {
-		resize(mat.rows(), mat.cols());
 		upload(queue, mat.get_data(), copy);
 	}
 
@@ -126,7 +123,6 @@ public:
 #endif
 	
 	void copy_from(std::shared_ptr<CommandQueue> queue, const Buffer3D<T>& other) {
-		resize(other.width(), other.height(), other.depth());
 		if(data_) {
 			if(cl_int err = clEnqueueCopyBuffer(queue->get(), other.data(), data_, 0, 0, size() * sizeof(T), 0, 0, 0)) {
 				throw std::runtime_error("clEnqueueCopyBuffer() failed with " + get_error_string(err));
