@@ -8,7 +8,7 @@ https://github.com/madMAx43v3r/chia-gigahorse
 
 Binaries for `mmx-node` that support farming compressed plots, as well as regular plots.
 
-Supports Nvidia GPUs only at this point. Automatic fallback to CPU farming if no GPUs available.
+Newer AMD GPUs starting with RX 6000 series do not work due to a driver bug, we have to wait for AMD to fix it. Vega series is known to still work when using an older driver with amdgpu-install --opencl=pal,legacy. RX 5000 series is unknown at this point.
 
 ### Installation
 
