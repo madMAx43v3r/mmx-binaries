@@ -19,6 +19,7 @@
 #define CL_TARGET_OPENCL_VERSION 120
 
 #include <CL/cl.h>
+#include <CL/cl_ext.h>
 
 #include <vector>
 #include <string>
@@ -35,7 +36,7 @@ std::string get_platform_name(cl_platform_id platform);
 
 cl_platform_id find_platform_by_name(const std::string& name);
 
-cl_context create_context(cl_platform_id platform, cl_device_type device_type);
+cl_context create_context(cl_platform_id platform, const std::vector<cl_device_id>& devices);
 
 void release_context(cl_context& context);
 
