@@ -43,7 +43,7 @@ Vue.component('explore-menu', {
 			<v-tabs class="mb-2">
 				<v-tab to="/explore/blocks">{{ $t('explore_menu.blocks') }}</v-tab>
 				<v-tab to="/explore/transactions">{{ $t('explore_menu.transactions') }}</v-tab>
-				<v-tab to="/explore/farmers">Farmers</v-tab>
+				<v-tab to="/explore/farmers">{{ $t('explore_menu.farmers') }}</v-tab>
 			</v-tabs>
 		</div>
 	`
@@ -66,8 +66,8 @@ Vue.component('blocks-table', {
 				{ text: this.$t('explore_blocks.score'), value: 'score' },
 				{ text: this.$t('explore_blocks.reward'), value: 'reward' },
 				{ text: "TX Fees", value: 'tx_fees' },
-				{ text: "Size", value: 'static_cost_ratio' },
-				{ text: "Cost", value: 'total_cost_ratio' },
+				{ text: this.$t('explore_blocks.size'), value: 'static_cost_ratio' },
+				{ text: this.$t('explore_blocks.cost'), value: 'total_cost_ratio' },
 				{ text: this.$t('explore_blocks.hash'), value: 'hash' },
 			]
 		}
@@ -246,8 +246,8 @@ Vue.component('explore-farmers', {
 	computed: {
 		headers() {
 			return [
-				{ text: "No. Blocks", value: 'block_count'},
-				{ text: "Farmer Key", value: 'farmer_key'},
+				{ text: this.$t('explore_farmers.no_blocks'), value: 'block_count'},
+				{ text: this.$t('explore_farmers.farmer_key'), value: 'farmer_key'},
 			]
 		}
 	},
@@ -457,29 +457,6 @@ Vue.component('block-view', {
 					</v-card>
 	
 					<v-card class="my-2">
-						<v-simple-table v-if="data.tx_base">
-							<template v-slot:default>
-								<thead>
-									<tr>
-										<th class="key-cell"></th>
-										<th>{{ $t('block_view.amount') }}</th>
-										<th></th>
-										<th>{{ $t('block_view.address') }}</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr v-for="(item, index) in data.tx_base.outputs" :key="index">
-										<td class="key-cell">{{ $t('block_view.reward') }}[{{index}}]</td>
-										<td><b>{{item.value}}</b></td>
-										<td>{{item.symbol}}</td>
-										<td><router-link :to="'/explore/address/' + item.address">{{item.address}}</router-link></td>
-									</tr>
-								</tbody>
-							</template>
-						</v-simple-table>
-					</v-card>
-	
-					<v-card class="my-2">
 						<v-simple-table v-if="data.tx_list.length">
 							<thead>
 								<tr>
@@ -581,7 +558,7 @@ Vue.component('transaction-view', {
 								<template v-if="data.height">
 									<router-link :to="'/explore/block/height/' + data.height">{{data.height}}</router-link>
 								</template>
-								<template v-if="!data.height"><i>pending</i></template>
+								<template v-if="!data.height"><i>{{ $t('common.pending') }}</i></template>
 							</td>
 						</tr>
 						<tr v-if="data.did_fail" class="red--text">
