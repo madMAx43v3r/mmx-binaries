@@ -25,14 +25,14 @@ public:
 	
 	std::vector<std::string> build_log;
 	
-	Program(cl_context context, cl_platform_id platform);
+	Program(cl_context context);
 	
 	Program(const Program&) = delete;
 	Program& operator=(const Program&) = delete;
 	
 	~Program();
 	
-	static std::shared_ptr<Program> create(cl_context context, cl_platform_id platform);
+	static std::shared_ptr<Program> create(cl_context context);
 	
 	void add_source(const std::string& file_name);
 	
@@ -42,7 +42,7 @@ public:
 
 	void create_from_source();
 	
-	bool build(cl_device_type device_type, bool with_arg_names = true);
+	bool build(const std::vector<cl_device_id>& devices, bool with_arg_names = true);
 	
 	void print_sources(std::ostream& out) const;
 	
@@ -52,7 +52,6 @@ public:
 	
 private:
 	cl_context context;
-	cl_platform_id platform;
 	cl_program program = nullptr;
 	bool have_arg_info = false;
 	

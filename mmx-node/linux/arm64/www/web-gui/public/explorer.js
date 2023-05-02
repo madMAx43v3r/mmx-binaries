@@ -43,7 +43,7 @@ Vue.component('explore-menu', {
 			<v-tabs class="mb-2">
 				<v-tab to="/explore/blocks">{{ $t('explore_menu.blocks') }}</v-tab>
 				<v-tab to="/explore/transactions">{{ $t('explore_menu.transactions') }}</v-tab>
-				<v-tab to="/explore/farmers">Farmers</v-tab>
+				<v-tab to="/explore/farmers">{{ $t('explore_menu.farmers') }}</v-tab>
 			</v-tabs>
 		</div>
 	`
@@ -65,8 +65,9 @@ Vue.component('blocks-table', {
 				{ text: this.$t('explore_blocks.k'), value: 'ksize' },
 				{ text: this.$t('explore_blocks.score'), value: 'score' },
 				{ text: this.$t('explore_blocks.reward'), value: 'reward' },
-				{ text: "Size", value: 'static_cost_ratio' },
-				{ text: "Cost", value: 'total_cost_ratio' },
+				{ text: "TX Fees", value: 'tx_fees' },
+				{ text: this.$t('explore_blocks.size'), value: 'static_cost_ratio' },
+				{ text: this.$t('explore_blocks.cost'), value: 'total_cost_ratio' },
 				{ text: this.$t('explore_blocks.hash'), value: 'hash' },
 			]
 		}
@@ -99,7 +100,11 @@ Vue.component('blocks-table', {
 			</template>
 
 			<template v-slot:item.reward="{ item }">
-				{{item.tx_base && item.tx_base.exec_result ? (item.tx_base.exec_result.total_fee_value).toFixed(3) + "&nbsp;&nbsp;MMX" : null}}
+				{{item.reward_addr ? (item.reward_amount.value).toFixed(3) + " MMX" : null}}
+			</template>
+			
+			<template v-slot:item.tx_fees="{ item }">
+				{{item.tx_count ? (item.tx_fees.value).toFixed(3) + " MMX" : null}}
 			</template>
 			
 			<template v-slot:item.static_cost_ratio="{ item }">
@@ -111,7 +116,7 @@ Vue.component('blocks-table', {
 			</template>
 
 			<template v-slot:item.hash="{ item }">
-				<router-link :to="'/explore/block/hash/' + item.hash">{{item.hash}}</router-link>
+				<router-link :to="'/explore/block/hash/' + item.hash">{{get_short_hash(item.hash, 16)}}</router-link>
 			</template>
 
 		</v-data-table>
@@ -127,20 +132,6 @@ Vue.component('explore-blocks', {
 			data: [],
 			timer: null,
 			loaded: false
-		}
-	},
-	computed: {
-		headers() {
-			return [
-				{ text: this.$t('explore_blocks.height'), value: 'height', width: "5%"},
-				{ text: this.$t('explore_blocks.tx'), value: 'tx_count' },
-				{ text: this.$t('explore_blocks.k'), value: 'ksize' },
-				{ text: this.$t('explore_blocks.score'), value: 'score' },
-				{ text: this.$t('explore_blocks.reward'), value: 'reward' },
-				{ text: this.$t('explore_blocks.tdiff'), value: 'time_diff' },
-				{ text: this.$t('explore_blocks.sdiff'), value: 'space_diff' },
-				{ text: this.$t('explore_blocks.hash'), value: 'hash' },
-			]
 		}
 	},
 	methods: {
@@ -255,8 +246,8 @@ Vue.component('explore-farmers', {
 	computed: {
 		headers() {
 			return [
-				{ text: "No. Blocks", value: 'block_count'},
-				{ text: "Farmer Key", value: 'farmer_key'},
+				{ text: this.$t('explore_farmers.no_blocks'), value: 'block_count'},
+				{ text: this.$t('explore_farmers.farmer_key'), value: 'farmer_key'},
 			]
 		}
 	},
@@ -418,13 +409,27 @@ Vue.component('block-view', {
 										<td class="key-cell">{{ $t('block_view.vdf_iterations') }}</td>
 										<td>{{data.vdf_iters}}</td>
 									</tr>
-									<template v-if="data.tx_base">
+									<template v-if="data.vdf_reward_addr">
 										<tr>
-											<td class="key-cell">{{ $t('block_view.tx_base') }}</td>
-											<td><router-link :to="'/explore/transaction/' + data.tx_base.id">{{data.tx_base.id}}</router-link></td>
+											<td class="key-cell">Timelord</td>
+											<td><router-link :to="'/explore/address/' + data.vdf_reward_addr">{{data.vdf_reward_addr}}</router-link></td>
+										</tr>
+									</template>
+									<template v-if="data.reward_addr">
+										<tr>
+											<td class="key-cell">Farmer Address</td>
+											<td><router-link :to="'/explore/address/' + data.reward_addr">{{data.reward_addr}}</router-link></td>
 										</tr>
 									</template>
 									<template v-if="data.proof">
+										<tr>
+											<td class="key-cell">Block Reward</td>
+											<td>{{data.reward_amount.value}} MMX</td>
+										</tr>
+										<tr>
+											<td class="key-cell">TX Fees</td>
+											<td>{{data.tx_fees.value}} MMX</td>
+										</tr>
 										<tr>
 											<td class="key-cell">{{ $t('block_view.tx_count') }}</td>
 											<td>{{data.tx_count}}</td>
@@ -446,29 +451,6 @@ Vue.component('block-view', {
 											<td><router-link :to="'/explore/farmer/' + data.proof.farmer_key">{{data.proof.farmer_key}}</router-link></td>
 										</tr>
 									</template>
-								</tbody>
-							</template>
-						</v-simple-table>
-					</v-card>
-	
-					<v-card class="my-2">
-						<v-simple-table v-if="data.tx_base">
-							<template v-slot:default>
-								<thead>
-									<tr>
-										<th class="key-cell"></th>
-										<th>{{ $t('block_view.amount') }}</th>
-										<th></th>
-										<th>{{ $t('block_view.address') }}</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr v-for="(item, index) in data.tx_base.outputs" :key="index">
-										<td class="key-cell">{{ $t('block_view.reward') }}[{{index}}]</td>
-										<td><b>{{item.value}}</b></td>
-										<td>{{item.symbol}}</td>
-										<td><router-link :to="'/explore/address/' + item.address">{{item.address}}</router-link></td>
-									</tr>
 								</tbody>
 							</template>
 						</v-simple-table>
@@ -576,7 +558,7 @@ Vue.component('transaction-view', {
 								<template v-if="data.height">
 									<router-link :to="'/explore/block/height/' + data.height">{{data.height}}</router-link>
 								</template>
-								<template v-if="!data.height"><i>pending</i></template>
+								<template v-if="!data.height"><i>{{ $t('common.pending') }}</i></template>
 							</td>
 						</tr>
 						<tr v-if="data.did_fail" class="red--text">

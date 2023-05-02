@@ -13,6 +13,8 @@ Vue.component('node-settings', {
 			opencl_platform_list: null,
 			farmer_reward_addr: "null",
 			timelord_reward_addr: "null",
+			enable_timelord_reward: null,
+			verify_timelord_reward: null,
 			reload_interval: null,
 			plot_dirs: [],
 			new_plot_dir: null,
@@ -55,6 +57,8 @@ Vue.component('node-settings', {
 					}
 					this.farmer_reward_addr = data["Farmer.reward_addr"];
 					this.timelord_reward_addr = data["TimeLord.reward_addr"];
+					this.enable_timelord_reward = data["TimeLord.enable_reward"];
+					this.verify_timelord_reward = data["Node.verify_vdf_rewards"];
 					this.reload_interval = data["Harvester.reload_interval"];
 					this.plot_dirs = data["Harvester.plot_dirs"];
 				});
@@ -173,6 +177,16 @@ Vue.component('node-settings', {
 				this.set_config("TimeLord.reward_addr", value.length ? value : null, true);
 			}
 		},
+		enable_timelord_reward(value, prev) {
+			if(prev != null) {
+				this.set_config("TimeLord.enable_reward", value, true);
+			}
+		},
+		verify_timelord_reward(value, prev) {
+			if(prev != null) {
+				this.set_config("Node.verify_vdf_rewards", value, true);
+			}
+		},
 		reload_interval(value, prev) {
 			if(prev != null) {
 				this.set_config("Harvester.reload_interval", value, true);
@@ -199,7 +213,7 @@ Vue.component('node-settings', {
 	template: `
 		<div>
 			<v-card v-if="!$isWinGUI">
-				<v-card-title>GUI</v-card-title>
+				<v-card-title>{{ $t('node_settings.gui') }}</v-card-title>
 				<v-card-text>
 					<v-select
 						v-model="$i18n.locale"
@@ -221,26 +235,31 @@ Vue.component('node-settings', {
 			</v-card>
 
 			<v-card class="my-2">
-				<v-card-title>General</v-card-title>
+				<v-card-title>{{ $t('node_settings.general') }}</v-card-title>
 				<v-card-text>
 					<v-progress-linear :active="loading" indeterminate absolute top></v-progress-linear>
-
-					<v-row>
-						<v-col>
-							<v-checkbox
-								v-model="timelord"
-								:label="$t('node_settings.enable_timelord')"
-								class="d-inline-block"
-							></v-checkbox>
-						</v-col>
-						<v-col>
-							<v-checkbox
-								v-model="open_port"
-								label="Open network port to allow incoming connections (UPnP)"
-								class="d-inline-block"
-							></v-checkbox>
-						</v-col>
-					</v-row>
+					
+					<v-checkbox
+						v-model="timelord"
+						:label="$t('node_settings.enable_timelord')"
+						class="my-0"
+					></v-checkbox>
+					<v-checkbox
+						:disabled="!timelord"
+						v-model="enable_timelord_reward"
+						:label="$t('node_settings.enable_timelord_reward')"
+						class="my-0"
+					></v-checkbox>
+					<v-checkbox
+						v-model="verify_timelord_reward"
+						:label="$t('node_settings.verify_timelord_reward')"
+						class="my-0"
+					></v-checkbox>
+					<v-checkbox
+						v-model="open_port"
+						:label="$t('node_settings.open_port')"
+						class="my-0"
+					></v-checkbox>
 					
 					<v-select
 						v-model="opencl_platform"
@@ -274,23 +293,23 @@ Vue.component('node-settings', {
 			</v-card>
 			
 			<v-card class="my-2">
-				<v-card-title>Blockchain</v-card-title>
+				<v-card-title>{{ $t('node_settings.blockchain') }}</v-card-title>
 				<v-card-text>
 					<v-text-field
-						label="Revert DB to height"
+						:label="$t('node_settings.revert_db_to_height')"
 						v-model="revert_height"
 					></v-text-field>
-					<v-btn @click="revert_sync(revert_height)" outlined color="error">Revert</v-btn>
+					<v-btn @click="revert_sync(revert_height)" outlined color="error">{{ $t('node_settings.revert') }}</v-btn>
 				</v-card-text>
 			</v-card>
 			
 			<v-card class="my-2">
-				<v-card-title>Harvester</v-card-title>
+				<v-card-title>{{ $t('harvester_settings.harvester') }}</v-card-title>
 				<v-card-text>
 					<v-progress-linear :active="loading" indeterminate absolute top></v-progress-linear>
 					
 					<v-text-field
-						label="Harvester Reload Interval (sec)"
+						:label="$t('harvester_settings.harvester_reload_interval')"
 						:value="reload_interval" @change="value => reload_interval = parseInt(value)"
 					></v-text-field>
 					
@@ -298,7 +317,7 @@ Vue.component('node-settings', {
 						<v-simple-table>
 							<thead>
 								<tr>
-									<th>Plot Directory</th>
+									<th>{{ $t('harvester_settings.plot_directory') }}</th>
 									<th></th>
 								</tr>
 							</thead>
@@ -312,10 +331,10 @@ Vue.component('node-settings', {
 					</v-card>
 					
 					<v-text-field
-						label="Plot Directory"
+						:label="$t('harvester_settings.plot_directory')"
 						v-model="new_plot_dir"
 					></v-text-field>
-					<v-btn @click="add_plot_dir(new_plot_dir)" outlined color="primary">Add Directory</v-btn>
+					<v-btn @click="add_plot_dir(new_plot_dir)" outlined color="primary">{{ $t('harvester_settings.add_directory') }}</v-btn>
 				</v-card-text>
 			</v-card>
 							

@@ -103,7 +103,7 @@ Vue.component('farmer-plots', {
 		},
 		headers2() {
 			return [
-				{ text: "Harvester", value: 'name' },
+				{ text: this.$t('common.harvester'), value: 'name' },
 				{ text: this.$t('farmer_info.physical_size'), value: 'bytes' },
 			]
 		}
@@ -281,11 +281,11 @@ Vue.component('farmer-blocks', {
 			</template>
 
 			<template v-slot:item.reward="{ item }">
-				<b>{{item.tx_base && item.tx_base.exec_result ? item.tx_base.exec_result.total_fee_value : 0}}</b> MMX
+				<b>{{item.reward_amount.value}}</b> MMX
 			</template>
 			
 			<template v-slot:item.tx_fees="{ item }">
-				<b>{{item.tx_fees / 1e6}}</b> MMX
+				<b>{{item.tx_fees.value}}</b> MMX
 			</template>
 
 			<template v-slot:item.time="{ item }">

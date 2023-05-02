@@ -91,6 +91,9 @@ uint64_t rand64();
 /// Converts a binary string to a hex string, with constant length. (Without leading "0x")
 std::string to_hex_string(const void* data, const size_t length, bool big_endian = false, bool lower_case = false);
 
+/// Converts a hex string to binary vector. (Handles leading "0x")
+std::vector<uint8_t> from_hex_string(const std::string& str);
+
 /// Converts an integer to a hex string (big endian), without leading zeros. (Without leading "0x", upper case chars)
 template<typename T>
 std::string to_hex_string(const T& value) {
@@ -127,6 +130,9 @@ std::string get_socket_error_text();
 
 /// Get this machines host name
 std::string get_host_name();
+
+/// Get peer address for socket
+std::string get_peer_address(int sock);
 
 
 } // vnx
