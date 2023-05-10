@@ -13,5 +13,5 @@ Newer AMD GPUs starting with RX 6000 series do not work due to a driver bug, we 
 ### Installation
 
 ```
-sudo apt install libgomp1 libsecp256k1-0 libsodium-dev libminiupnpc-dev libjemalloc-dev zlib1g-dev ocl-icd-opencl-dev clinfo
+sudo apt install libgomp1 libsecp256k1-0 libsodium23 libminiupnpc17 libjemalloc2 zlib1g ocl-icd-libopencl1 clinfo
 ```
