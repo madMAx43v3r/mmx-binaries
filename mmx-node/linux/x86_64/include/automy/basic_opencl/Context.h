@@ -8,18 +8,8 @@
 #ifndef INCLUDE_AUTOMY_BASIC_OPENCL_CONTEXT_H_
 #define INCLUDE_AUTOMY_BASIC_OPENCL_CONTEXT_H_
 
+#include <automy/basic_opencl/OpenCL.h>
 #include <automy/basic_opencl/CommandQueue.h>
-
-#ifdef _MSC_VER
-#include <automy_basic_opencl_export.h>
-#else
-#define AUTOMY_BASIC_OPENCL_EXPORT
-#endif
-
-#define CL_TARGET_OPENCL_VERSION 120
-
-#include <CL/cl.h>
-#include <CL/cl_ext.h>
 
 #include <vector>
 #include <string>
