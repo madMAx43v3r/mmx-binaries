@@ -329,8 +329,39 @@ void read(TypeInput& in, std::shared_ptr<T>& value, const TypeCode* type_code, c
 template<typename T>
 void read(TypeInput& in, vnx::optional<T>& value, const TypeCode* type_code, const uint16_t* code);
 
+template<typename T>
+void read_vector_data(TypeInput& in, T& vector, const TypeCode* type_code, const uint16_t* value_code, const uint32_t size) {
+	if(size > in.max_list_size) {
+		throw std::logic_error("vector size > max_list_size: " + std::to_string(size));
+	}
+	if(!in.safe_read) {
+		vector.resize(size);
+	}
+	if(is_equivalent<typename T::value_type>{}(value_code, type_code)) {
+		if(in.safe_read) {
+			for(uint32_t i = 0; i < size; i += VNX_BUFFER_SIZE) {
+				const auto chunk_size = std::min<uint32_t>(size - i, VNX_BUFFER_SIZE);
+				vector.resize(i + chunk_size);
+				in.read((char*)&vector[i], chunk_size);
+			}
+		} else {
+			in.read((char*)vector.data(), size * sizeof(typename T::value_type));
+		}
+	} else {
+		for(uint32_t i = 0; i < size; ++i) {
+			if(in.safe_read) {
+				typename T::value_type tmp;
+				vnx::type<typename T::value_type>().read(in, tmp, type_code, value_code);
+				vector.push_back(tmp);
+			} else {
+				vnx::type<typename T::value_type>().read(in, vector[i], type_code, value_code);
+			}
+		}
+	}
+}
+
 /// Returns dimension array and total size of a matrix (CODE_MATRIX)
-size_t get_matrix_size(std::vector<size_t>& dims, const uint16_t* code);
+size_t read_matrix_size(std::vector<size_t>& dims, const uint16_t* code);
 
 /** \brief Reads a dynamically allocated N-dimensional matrix from the input stream.
  *
@@ -341,15 +372,9 @@ size_t get_matrix_size(std::vector<size_t>& dims, const uint16_t* code);
  */
 template<typename T>
 void read_matrix(TypeInput& in, std::vector<T>& data, std::vector<size_t>& dims, const uint16_t* code) {
-	const auto total_size = get_matrix_size(dims, code);
-	if(total_size > in.max_list_size) {
-		throw std::logic_error("matrix size > max_list_size: " + std::to_string(total_size));
-	}
-	data.resize(total_size);
+	const auto total_size = read_matrix_size(dims, code);
 	const uint16_t* value_code = code + 2 + dims.size();
-	for(size_t i = 0; i < total_size; ++i) {
-		vnx::type<T>().read(in, data[i], nullptr, value_code);
-	}
+	read_vector_data(in, data, nullptr, value_code, total_size);
 }
 
 /**
@@ -389,7 +414,7 @@ void read_array(TypeInput& in, T& array, const TypeCode* type_code, const uint16
 		case CODE_MATRIX:
 		case CODE_ALT_MATRIX: {
 			std::vector<size_t> dims;
-			size = get_matrix_size(dims, code);
+			size = read_matrix_size(dims, code);
 			value_code = code + 2 + dims.size();
 			break;
 		}
@@ -457,7 +482,7 @@ void read_vector(TypeInput& in, T& vector, const TypeCode* type_code, const uint
 		case CODE_MATRIX:
 		case CODE_ALT_MATRIX: {
 			std::vector<size_t> dims;
-			size = get_matrix_size(dims, code);
+			size = read_matrix_size(dims, code);
 			value_code = code + 2 + dims.size();
 			break;
 		}
@@ -470,17 +495,7 @@ void read_vector(TypeInput& in, T& vector, const TypeCode* type_code, const uint
 			size = 1;
 			value_code = code;
 	}
-	if(size > in.max_list_size) {
-		throw std::logic_error("vector size > max_list_size: " + std::to_string(size));
-	}
-	vector.resize(size);
-	if(is_equivalent<typename T::value_type>{}(value_code, type_code)) {
-		in.read((char*)vector.data(), size * sizeof(typename T::value_type));
-	} else {
-		for(uint32_t i = 0; i < size; ++i) {
-			vnx::type<typename T::value_type>().read(in, vector[i], type_code, value_code);
-		}
-	}
+	read_vector_data(in, vector, type_code, value_code, size);
 }
 
 /// Same as read_vector<T>() with T = std::vector<T>

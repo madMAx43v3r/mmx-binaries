@@ -49,6 +49,9 @@ public:
 	/// Returns number of active non-idle threads (ie. which are doing some work)
 	size_t get_num_running() const;
 	
+	/// Returns get_num_pending() + get_num_running()
+	size_t get_num_pending_total() const;
+
 	/// Trigger all threads to exit. (thread-safe)
 	void exit();
 	

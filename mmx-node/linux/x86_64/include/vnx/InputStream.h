@@ -339,6 +339,8 @@ public:
 	 */
 	void clear();
 	
+	bool safe_read = false;											///< to avoid pre-allocation of large buffers
+
 	size_t max_list_size = VNX_MAX_SIZE;							///< to limit maximum list size
 
 	std::unordered_map<Hash64, const TypeCode*> type_code_map;		///< for faster lock-free lookup

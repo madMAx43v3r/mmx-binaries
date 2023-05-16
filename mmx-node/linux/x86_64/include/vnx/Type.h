@@ -70,13 +70,13 @@ typedef SSIZE_T ssize_t;
  * Applies to CODE_DYNAMIC.
  * Absolute maximum is 255 to detect different byte order.
  */
-#define VNX_MAX_BYTE_CODE_SIZE 32
+#define VNX_MAX_BYTE_CODE_SIZE 32u
 
 /** \brief The buffer size for InputBuffer and OutputBuffer.
  * 
  * This is also the maximum combined size of all primitive fields in a struct or class.
  */
-#define VNX_BUFFER_SIZE 16384
+#define VNX_BUFFER_SIZE 16384u
 
 
 /// VNX namespace
