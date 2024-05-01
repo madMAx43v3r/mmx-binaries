@@ -1,7 +1,0 @@
-package vnx;
-
-class NoSuchMethod extends NoSuchService {
-	
-	string method;
-	
-}

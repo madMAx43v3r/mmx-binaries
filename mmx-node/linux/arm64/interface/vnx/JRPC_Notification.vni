@@ -1,9 +1,0 @@
-package vnx;
-
-
-class JRPC_Notification{
-	string jsonrpc;                       // must be "2.0"
-	string method;                        // "ModuleName.method" or "method" if module is selected or ".method" for Proxy
-	Variant params;                       // Object or Array
-}
-

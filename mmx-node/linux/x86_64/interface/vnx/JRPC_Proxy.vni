@@ -1,8 +1,0 @@
-package vnx;
-
-module JRPC_Proxy extends BaseProxy {
-
-	@Permission(PROXY_INTERNAL)
-	void select_service(string service_name);                          // select the module to send commands to
-
-}

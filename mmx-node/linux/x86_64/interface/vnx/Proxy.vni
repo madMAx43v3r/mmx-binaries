@@ -1,4 +1,0 @@
-package vnx;
-
-module Proxy extends BaseProxy {
-}

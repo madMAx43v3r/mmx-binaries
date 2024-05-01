@@ -1,7 +1,0 @@
-package vnx;
-
-class NoSuchService extends Exception {
-	
-	Hash64 dst_mac;
-	
-}

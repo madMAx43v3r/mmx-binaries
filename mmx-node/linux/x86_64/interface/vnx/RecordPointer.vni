@@ -1,7 +1,0 @@
-package vnx;
-
-class RecordPointer {
-	
-	long position = -1;			// [bytes]
-	
-}

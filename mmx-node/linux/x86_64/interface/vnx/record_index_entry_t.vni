@@ -1,9 +1,0 @@
-package vnx;
-
-struct record_index_entry_t {
-	
-	long pos = -1;				// [byte]
-	
-	long time;					// [usec]
-	
-}

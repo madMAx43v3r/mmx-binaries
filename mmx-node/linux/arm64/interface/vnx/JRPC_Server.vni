@@ -1,5 +1,0 @@
-package vnx;
-
-module JRPC_Server extends BaseServer {
-}
-

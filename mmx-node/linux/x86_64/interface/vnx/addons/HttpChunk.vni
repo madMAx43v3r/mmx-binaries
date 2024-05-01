@@ -1,7 +1,0 @@
-package vnx.addons;
-
-class HttpChunk extends HttpData {
-	
-	ulong id;					// HTTP request id
-	
-}

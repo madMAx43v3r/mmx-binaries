@@ -1,3 +1,0 @@
-package vnx;
-
-abstract module Module implements ModuleInterface;
